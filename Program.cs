@@ -14,10 +14,11 @@ namespace Anti.LockScreen
             if (IsCreateNew) {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new fmSetting());
+                Application.Run(new fmSetting());                
             } else {
                 ApiHelper.TryActivePreInstance();
             }
+            mutex.Close();
         }
     }
 }

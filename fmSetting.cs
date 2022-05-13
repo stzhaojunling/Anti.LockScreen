@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace Anti.LockScreen
 {
@@ -153,9 +154,18 @@ namespace Anti.LockScreen
         #region SendKeyHistory
         private void lblSendTimes_DoubleClick(object sender, EventArgs e)
         {
-            if (mSendKeyHistory.Count > 0) {
-                MessageBox.Show(string.Join("\r\n", mSendKeyHistory), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var sb = new System.Text.StringBuilder();
+            foreach(var s in mSendKeyHistory) {
+                sb.Append(s).Append(Environment.NewLine);
             }
+            if (sb.Length > 0) {
+                sb.Append('-', 36).Append(Environment.NewLine);
+            }
+            var ass = Assembly.GetExecutingAssembly();
+            sb.AppendLine(ass.GetName().Version.ToString());
+            var cp = ass.GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false)[0];
+            sb.Append((cp as AssemblyCopyrightAttribute).Copyright);
+            MessageBox.Show(sb.ToString(), this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private List<string> mSendKeyHistory = new List<string>();
         private void addToSendKeyHistory()
