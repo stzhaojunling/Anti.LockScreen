@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
+using System.IO;
+    
 
 namespace Anti.LockScreen
 {
@@ -28,12 +30,13 @@ namespace Anti.LockScreen
         public fmSetting()
         {            
             InitializeComponent();
-            mIsCn = System.Globalization.CultureInfo.CurrentUICulture.Name == "zh-CN";
+            mIsCn = System.Globalization.CultureInfo.CurrentUICulture.Name == "zh-CN";            
             if (mIsCn) {
                 lblIdle.Text = "间隔时间(分)";
                 lblSend.Text = "连续发送次数";
                 btnExist.Text = "退出";
                 Text = "防锁屏";
+                cbStartup.Text = "开机启动";
             }
             niTray.Icon = Icon = Icon.ExtractAssociatedIcon(Environment.GetCommandLineArgs()[0]);
             #region Init Parameter Combox
@@ -48,6 +51,7 @@ namespace Anti.LockScreen
             cbInterval.SelectedIndex = int.Parse(SettingStr[0]);
             cbRepeatCount.SelectedIndex = int.Parse(SettingStr[1]);
             #endregion Init Parameter Combox
+            cbStartup.Checked = File.Exists(DefaultlnkPath);
         }
         private bool allowClose = false;       // ContextMenu's Exit command used
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -176,5 +180,43 @@ namespace Anti.LockScreen
             mSendKeyHistory.Add(string.Format("{1}/{2} {0}", mLastSendKeyTime.ToString("yyyy-MM-dd HH:mm:ss"), mSendKeysCount, mTotalSendKeysCount));
         }
         #endregion SendKeyHistory
+
+        private string DefaultlnkPath
+        {
+            get {
+                var startup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+                var p = Path.Combine(startup, "Anti.LockScreen.lnk");
+                return p;
+            }
+        }
+
+        private void cbStartup_CheckedChanged(object sender, EventArgs e)
+        {
+            var lnkName = DefaultlnkPath;
+            if (cbStartup.Checked) {
+                if (File.Exists(lnkName)) {
+                    return;
+                }
+                var shell = new IWshRuntimeLibrary.WshShell();
+                var shortcut = shell.CreateShortcut(lnkName) as IWshRuntimeLibrary.IWshShortcut;
+                shortcut.TargetPath = Application.ExecutablePath;
+                shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                shortcut.WindowStyle = 1;
+                shortcut.Description = "Anti Lock Screen";
+                shortcut.IconLocation = shortcut.TargetPath;
+                shortcut.Save();
+                if (File.Exists(lnkName)) {
+                    var msg = string.Format("Add to Startup Succ\r\n{0}", lnkName);
+                    ApiHelper.Log(msg);
+                    MessageBox.Show(msg, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                } else {
+                    cbStartup.Checked = false;
+                }
+            } else {
+                if (File.Exists(lnkName)) {
+                    File.Delete(lnkName);
+                }
+            }
+        }
     }
 }

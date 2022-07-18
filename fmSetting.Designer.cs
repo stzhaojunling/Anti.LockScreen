@@ -37,6 +37,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbInterval = new System.Windows.Forms.ComboBox();
             this.cbRepeatCount = new System.Windows.Forms.ComboBox();
+            this.cbStartup = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tmIdleCheck
@@ -123,11 +124,23 @@
             this.cbRepeatCount.TabIndex = 2;
             this.cbRepeatCount.Click += new System.EventHandler(this.fmSetting_Click);
             // 
+            // cbStartup
+            // 
+            this.cbStartup.AutoSize = true;
+            this.cbStartup.Location = new System.Drawing.Point(295, 12);
+            this.cbStartup.Name = "cbStartup";
+            this.cbStartup.Size = new System.Drawing.Size(92, 26);
+            this.cbStartup.TabIndex = 13;
+            this.cbStartup.Text = "Startup";
+            this.cbStartup.UseVisualStyleBackColor = true;
+            this.cbStartup.CheckedChanged += new System.EventHandler(this.cbStartup_CheckedChanged);
+            // 
             // fmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(392, 166);
+            this.Controls.Add(this.cbStartup);
             this.Controls.Add(this.cbRepeatCount);
             this.Controls.Add(this.cbInterval);
             this.Controls.Add(this.panel1);
@@ -160,6 +173,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox cbInterval;
         private System.Windows.Forms.ComboBox cbRepeatCount;
+        private System.Windows.Forms.CheckBox cbStartup;
     }
 }
 
