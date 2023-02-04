@@ -61,6 +61,7 @@ namespace Anti.LockScreen
         public const string AppRegKey = "SOFTWARE\\Anti.LockScreen";
         public const string KeyName_Setting = "";
         public const string KeyName_Handle = "H";
+        public const string KeyName_Minimize = "M";
         public static string RegReadKey(string KeyName, string DefVal)
         {
             var Key = Registry.CurrentUser.CreateSubKey(AppRegKey);
@@ -105,6 +106,17 @@ namespace Anti.LockScreen
         public static void Log(string Msg)
         {
             System.Diagnostics.Debug.WriteLine(string.Format("{0} {1}", DateTime.Now.ToLongTimeString(), Msg));
+        }
+
+        public static bool StartupMinimize
+        {
+            get {
+                var v = RegReadKey(KeyName_Minimize, "0");
+                return v == "1";
+            }
+            set {
+                RegWriteKey(KeyName_Minimize, value ? "1" : "0");
+            }
         }
     }
 }

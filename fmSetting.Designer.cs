@@ -38,6 +38,7 @@
             this.cbInterval = new System.Windows.Forms.ComboBox();
             this.cbRepeatCount = new System.Windows.Forms.ComboBox();
             this.cbStartup = new System.Windows.Forms.CheckBox();
+            this.cbMinimize = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // tmIdleCheck
@@ -76,7 +77,7 @@
             // btnExist
             // 
             this.btnExist.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnExist.Location = new System.Drawing.Point(295, 53);
+            this.btnExist.Location = new System.Drawing.Point(239, 89);
             this.btnExist.Name = "btnExist";
             this.btnExist.Size = new System.Drawing.Size(84, 30);
             this.btnExist.TabIndex = 10;
@@ -87,7 +88,7 @@
             // lblMsgs
             // 
             this.lblMsgs.AutoSize = true;
-            this.lblMsgs.Location = new System.Drawing.Point(12, 106);
+            this.lblMsgs.Location = new System.Drawing.Point(12, 136);
             this.lblMsgs.Name = "lblMsgs";
             this.lblMsgs.Size = new System.Drawing.Size(205, 22);
             this.lblMsgs.TabIndex = 11;
@@ -99,16 +100,16 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(15, 94);
+            this.panel1.Location = new System.Drawing.Point(16, 125);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(364, 1);
+            this.panel1.Size = new System.Drawing.Size(310, 1);
             this.panel1.TabIndex = 12;
             // 
             // cbInterval
             // 
             this.cbInterval.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbInterval.FormattingEnabled = true;
-            this.cbInterval.Location = new System.Drawing.Point(170, 15);
+            this.cbInterval.Location = new System.Drawing.Point(233, 15);
             this.cbInterval.Name = "cbInterval";
             this.cbInterval.Size = new System.Drawing.Size(90, 29);
             this.cbInterval.TabIndex = 1;
@@ -118,7 +119,7 @@
             // 
             this.cbRepeatCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbRepeatCount.FormattingEnabled = true;
-            this.cbRepeatCount.Location = new System.Drawing.Point(170, 55);
+            this.cbRepeatCount.Location = new System.Drawing.Point(233, 55);
             this.cbRepeatCount.Name = "cbRepeatCount";
             this.cbRepeatCount.Size = new System.Drawing.Size(90, 29);
             this.cbRepeatCount.TabIndex = 2;
@@ -127,7 +128,7 @@
             // cbStartup
             // 
             this.cbStartup.AutoSize = true;
-            this.cbStartup.Location = new System.Drawing.Point(295, 12);
+            this.cbStartup.Location = new System.Drawing.Point(30, 93);
             this.cbStartup.Name = "cbStartup";
             this.cbStartup.Size = new System.Drawing.Size(92, 26);
             this.cbStartup.TabIndex = 13;
@@ -135,11 +136,23 @@
             this.cbStartup.UseVisualStyleBackColor = true;
             this.cbStartup.CheckedChanged += new System.EventHandler(this.cbStartup_CheckedChanged);
             // 
+            // cbMinimize
+            // 
+            this.cbMinimize.AutoSize = true;
+            this.cbMinimize.Location = new System.Drawing.Point(128, 93);
+            this.cbMinimize.Name = "cbMinimize";
+            this.cbMinimize.Size = new System.Drawing.Size(105, 26);
+            this.cbMinimize.TabIndex = 14;
+            this.cbMinimize.Text = "Minimize";
+            this.cbMinimize.UseVisualStyleBackColor = true;
+            this.cbMinimize.CheckedChanged += new System.EventHandler(this.cbMinimize_CheckedChanged);
+            // 
             // fmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 166);
+            this.ClientSize = new System.Drawing.Size(337, 189);
+            this.Controls.Add(this.cbMinimize);
             this.Controls.Add(this.cbStartup);
             this.Controls.Add(this.cbRepeatCount);
             this.Controls.Add(this.cbInterval);
@@ -174,6 +187,7 @@
         private System.Windows.Forms.ComboBox cbInterval;
         private System.Windows.Forms.ComboBox cbRepeatCount;
         private System.Windows.Forms.CheckBox cbStartup;
+        private System.Windows.Forms.CheckBox cbMinimize;
     }
 }
 

@@ -37,6 +37,7 @@ namespace Anti.LockScreen
                 btnExist.Text = "退出";
                 Text = "防锁屏";
                 cbStartup.Text = "开机启动";
+                cbMinimize.Text = "最小化";
             }
             niTray.Icon = Icon = Icon.ExtractAssociatedIcon(Environment.GetCommandLineArgs()[0]);
             #region Init Parameter Combox
@@ -52,6 +53,11 @@ namespace Anti.LockScreen
             cbRepeatCount.SelectedIndex = int.Parse(SettingStr[1]);
             #endregion Init Parameter Combox
             cbStartup.Checked = File.Exists(DefaultlnkPath);
+            cbMinimize.Checked = ApiHelper.StartupMinimize;
+            if (cbMinimize.Checked) {
+                this.Opacity = 0;
+                this.ShowInTaskbar = false;
+            }
         }
         private bool allowClose = false;       // ContextMenu's Exit command used
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -78,7 +84,7 @@ namespace Anti.LockScreen
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized) {
-                this.Hide();
+                this.Hide();                
             }
         }
         private void fmSetting_Click(object sender, EventArgs e)
@@ -96,9 +102,13 @@ namespace Anti.LockScreen
         {
             if (ApiHelper.IsSessionLocked) {
                 return;
-            }
+            }            
             if (mAppTimerTiggerCount++ == 1) {//如果没有动作,2秒后自动隐藏
                 this.Hide();
+                if (cbMinimize.Checked) {
+                    this.Opacity = 1;
+                    this.ShowInTaskbar = true;
+                }
             }            
             uint SettingTick = uint.Parse(cbInterval.Text) * 1000 * 60;//convert minate to ms
             var LastInputTick = ApiHelper.GetLastInputTick();
@@ -217,6 +227,11 @@ namespace Anti.LockScreen
                     File.Delete(lnkName);
                 }
             }
+        }
+
+        private void cbMinimize_CheckedChanged(object sender, EventArgs e)
+        {
+            ApiHelper.StartupMinimize = cbMinimize.Checked;
         }
     }
 }
